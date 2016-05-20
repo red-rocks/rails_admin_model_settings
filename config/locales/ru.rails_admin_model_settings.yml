@@ -1,0 +1,7 @@
+ru:
+  admin:
+    actions:
+      model_settings:
+        menu:           "Настройки"
+        breadcrumb:     "Настройки"
+        title:          "Настройки"

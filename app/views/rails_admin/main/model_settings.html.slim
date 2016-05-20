@@ -1,0 +1,24 @@
+#rails_admin_model_settings_wrapper
+  = stylesheet_link_tag 'rails_admin/rails_admin_model_settings'
+  = javascript_include_tag 'rails_admin/rails_admin_model_settings'
+
+  #rails_admin_model_settings
+    .controls
+      - @settings.each do |s|
+        .setting_block
+          span= s.label
+          span= s.key
+          span= s.type
+          span= link_to "открыть", show_path(model_name: 'rails_admin_settings~setting', id: s.id)
+          span= link_to "редактировать", edit_path(model_name: 'rails_admin_settings~setting', id: s.id)
+          .setting_value
+            - if s.file_kind?
+              = link_to CGI::escapeHTML(s.to_path), CGI::escapeHTML(s.file.url)
+            - elsif s.image_kind?
+              = link_to CGI::escapeHTML(s.file.url) do
+                = image_tag CGI::escapeHTML(s.file.url)
+            - elsif s.enum_kind?
+              - option = s.enum_collection.select { |e| e.last.to_s == s.value }.first
+              = option ? option.first : s.value
+            - else
+              == s.value
