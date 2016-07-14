@@ -12,7 +12,7 @@ module RailsAdminModelSettings
       end
 
       def rails_admin_settings_ns
-        "rails_admin_model_comments_#{self.name.gsub("::", "").underscore}"
+        "rails_admin_model_settings_#{self.name.gsub("::", "").underscore}"
       end
     end
 
