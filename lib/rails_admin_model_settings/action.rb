@@ -22,7 +22,7 @@ module RailsAdmin
         end
 
         register_instance_option :rails_admin_settings_ns do
-          if @abstract_model
+          if @abstract_model and @abstract_model.model.respond_to?(:rails_admin_settings_ns)
             @abstract_model.model.rails_admin_settings_ns
           else
             "rails_admin_model_settings"
@@ -38,7 +38,8 @@ module RailsAdmin
             @config = ::RailsAdminModelSettings::Configuration.new @abstract_model
             if request.get?
               if @abstract_model
-                @settings = @abstract_model.model.rails_admin_model_settings.all.to_a
+                @model = @abstract_model.model
+                @settings = @model.respond_to?(:rails_admin_model_settings) ? @model.rails_admin_model_settings.all.to_a : []
               else
                 @settings = RailsAdminSettings::Setting.ns(@action.rails_admin_settings_ns)
               end
