@@ -17,8 +17,8 @@
             - elsif s.image_kind?
               = link_to CGI::escapeHTML(s.file.url) do
                 = image_tag CGI::escapeHTML(s.file.url)
-            - elsif s.enum_kind?
-              - option = s.enum_collection.select { |e| e.last.to_s == s.value }.first
-              = option ? option.first : s.value
+            / - elsif s.enum_kind?
+            /   - option = s.enum_collection.select { |e| e.last.to_s == s.value }.first
+            /   = option ? option.first : s.value
             - else
               == s.value

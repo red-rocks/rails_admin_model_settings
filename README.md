@@ -1,8 +1,6 @@
 # RailsAdminModelSettings
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rails_admin_model_settings`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Do your models and [AckRailsAdminSettings](https://github.com/red-rocks/rails_admin_settings) cooperation is more easy.
 
 ## Installation
 
@@ -22,7 +20,41 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Add this into your model:
+    include RailsAdminModelSettings::ModelSettingable
+
+and use it for access to mongoid collection of model settings
+    YourModel.rails_admin_model_settings.where(key: 'some_key')
+
+or as wrapper for Settings
+    YourModel.settings.some_setting(kind: :html, default: "<p></p>")
+
+Also add 'model_settings' action into your rails_admin config and it will add list of settings for current model in rails_admin panel;
+
+### Advanced
+
+Default ns for AckRailsAdminSettings is "rails_admin_model_settings_#{underscored_model_name}" so you can use it like this
+```ruby
+module RailsAdminSettings
+  class Setting
+
+    after_save do |record|
+      case record.ns
+      when /^rails_admin_model_settings_/
+        _ns = record.ns.sub("rails_admin_model_settings_", "")
+        case _ns
+        when 'this_model'
+          do_something
+        when 'that_model'
+          do_something_else
+        end
+      end
+
+    end
+
+  end
+end
+```
 
 ## Development
 
@@ -32,10 +64,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rails_admin_model_settings.
+Bug reports and pull requests are welcome on GitHub at https://github.com/red-rocks/rails_admin_model_settings.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
