@@ -9,8 +9,8 @@
           span= s.label
           span= s.key
           span= s.type
-          span= link_to "открыть", show_path(model_name: 'rails_admin_settings~setting', id: s.id)
-          span= link_to "редактировать", edit_path(model_name: 'rails_admin_settings~setting', id: s.id)
+          span= link_to "открыть".freeze, show_path(model_name: 'rails_admin_settings~setting'.freeze, id: s.id)
+          span= link_to "редактировать".freeze, edit_path(model_name: 'rails_admin_settings~setting'.freeze, id: s.id)
           .setting_value
             - if s.file_kind?
               = link_to CGI::escapeHTML(s.to_path), CGI::escapeHTML(s.file.url)
