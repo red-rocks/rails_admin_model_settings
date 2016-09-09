@@ -31,6 +31,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
 
   spec.add_dependency "ack_rails_admin_settings", '~> 1.1'
-  spec.add_dependency "rails_admin", '~> 0.8.1'
-  spec.add_dependency "mongoid", [">= 5.0", "< 7.0"]
+  spec.add_dependency 'rails_admin', '>= 1.0.0.rc'
+  spec.add_dependency "mongoid", [">=  6.0.0.rc0", "< 7.0"]
 end

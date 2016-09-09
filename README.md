@@ -1,5 +1,7 @@
 # RailsAdminModelSettings
 
+### Rails 5 support
+
 Do your models and [AckRailsAdminSettings](https://github.com/red-rocks/rails_admin_settings) cooperation is more easy.
 
 ## Installation
