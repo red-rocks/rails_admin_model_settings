@@ -9,7 +9,7 @@ Do your models and [AckRailsAdminSettings](https://github.com/red-rocks/rails_ad
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rails_admin_model_settings'
+gem 'rails_admin_model_settings', '~> 0.3.0'
 ```
 
 And then execute:
