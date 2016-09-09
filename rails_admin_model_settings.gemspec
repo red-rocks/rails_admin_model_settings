@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "rails_admin_model_settings"
   spec.version       = RailsAdminModelSettings::VERSION
   spec.authors       = ["Alexander Kiseliev"]
-  spec.email         = ["dev@redrocks.pro"]
+  spec.email         = ["i43ack@gmail.com"]
 
   spec.summary       = %q{rails_admin_model_settings}
   spec.description   = %q{rails_admin_model_settings}
