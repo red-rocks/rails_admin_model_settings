@@ -10,3 +10,13 @@
 #   link = $(e.currentTarget)
 #   target = $(link.attr('href'))
 #   target.find('form').prepend("<input type='hidden' name='_method' value='delete'></input>").submit()
+
+
+$(document).on "click", "#rails_admin_model_settings .inline-edit", (e)->
+  e.preventDefault()
+  link = $(e.currentTarget)
+  span = link.parent()
+  span.siblings('.rails_admin_model_settings_inline_form.hidden').removeClass('hidden').find('form').attr("target", "_blank")
+  # span.siblings('.navigate-block').find('a').attr("target", "_blank")
+  span.siblings(".setting_value").andSelf().remove()
+  return false

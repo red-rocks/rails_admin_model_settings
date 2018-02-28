@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rails", '~> 5.0'
 
-  spec.add_dependency "ack_rails_admin_settings", '~> 1.2'
+  spec.add_dependency "ack_rails_admin_settings", '~> 1.2.4'
   spec.add_dependency "rails_admin", '>= 1.0'
   spec.add_dependency "mongoid", [">= 5.0", "< 7.0"]
 end
