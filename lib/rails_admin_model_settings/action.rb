@@ -43,7 +43,13 @@ module RailsAdmin
               else
                 @settings = RailsAdminSettings::Setting.ns(@action.rails_admin_settings_ns)
               end
-              render action: @action.template_name
+
+              if request.xhr?
+                render action: @action.template_name, layout: false
+              else
+                render action: @action.template_name
+              end
+              
             end
           end
         end

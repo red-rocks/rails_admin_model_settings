@@ -1,17 +1,27 @@
-#rails_admin_model_settings
-  .hidden
-    display: none
+#rails_admin_model_settings_wrapper
 
-  .error
-    color: red
+  #rails_admin_model_settings
+    .hidden
+      display: none
 
-  .success
-    color: green
+    .error
+      color: red
 
-  .setting_block
-    span
-      margin-right: 10px
-    .setting_value
-      margin-left: 10px
-      padding-bottom: 10px
-      border-bottom: 1px dotted grey
+    .success
+      color: green
+
+    .setting_block
+      &:hover
+        background-color: lightgrey        
+        .form-horizontal
+          background-color: lightgrey
+      span
+        margin-right: 10px
+      .setting_value
+        margin-left: 10px
+        padding-bottom: 10px
+        border-bottom: 1px dotted grey
+
+
+  .right-offset
+    float: right
