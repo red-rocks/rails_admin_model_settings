@@ -31,12 +31,23 @@ $(document).on "ajax:success", "#rails_admin_model_settings_wrapper .update-sett
   $("#rails_admin_model_settings").replaceWith($(data).find("#rails_admin_model_settings"))
 
 
+$(document).on "ajax:send", "#rails_admin_model_settings_wrapper .setting_block .update-setting a", (e, data, status, xhr)->
+  $(e.currentTarget).closest(".setting_block").hide()
+
+$(document).on "ajax:success", "#rails_admin_model_settings_wrapper .setting_block .update-setting a", (e, data, status, xhr)->
+  $(e.currentTarget).closest(".setting_block").replaceWith($(data).addClass("new-setting"))
+  setTimeout(->
+    $("#rails_admin_model_settings_wrapper .setting_block.new-setting").removeClass("new-setting")
+  , 2000)
+
 
 $(document).on "submit", ".rails_admin_settings_inline_form form", (e)->
   if $("#rails_admin_model_settings_wrapper #auto_update:checked").length > 0
-    $(e.currentTarget).hide()
+    form = $(e.currentTarget)
+    setting_block = form.closest(".setting_block")
+    form.hide()
     setTimeout(->
-      $("#rails_admin_model_settings_wrapper .update-settings a").trigger("click")
+      setting_block.find(".update-setting a").trigger("click")
     , 1000)
   else
     setTimeout(->

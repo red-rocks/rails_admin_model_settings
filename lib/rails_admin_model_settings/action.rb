@@ -39,17 +39,19 @@ module RailsAdmin
             if request.get?
               if @abstract_model
                 @model = @abstract_model.model
-                @settings = @model.respond_to?(:rails_admin_model_settings) ? @model.rails_admin_model_settings.all.to_a : []
+                @settings = @model.respond_to?(:rails_admin_model_settings) ? @model.rails_admin_model_settings.all : RailsAdminSettings::Setting.none
               else
                 @settings = RailsAdminSettings::Setting.ns(@action.rails_admin_settings_ns)
               end
+
+              @setting = @settings.where(id: params[:setting_id]) if params[:setting_id].present?
 
               if request.xhr?
                 render action: @action.template_name, layout: false
               else
                 render action: @action.template_name
               end
-              
+
             end
           end
         end

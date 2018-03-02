@@ -1,0 +1,24 @@
+.setting_block{data-setting-id=s.id.to_s}
+  span.filterable= s.label
+  span.filterable= s.key
+  span.filterable= s.type
+  span.update-setting.right-offset.= link_to "обновить".freeze, model_settings_path(model_name: @abstract_model.param_key, setting_id: s.id), remote: true
+  span.navigate-block.right-offset= link_to "открыть".freeze, show_path(model_name: 'rails_admin_settings~setting'.freeze, id: s.id), target: :_blank
+  span.navigate-block.right-offset= link_to "редактировать".freeze, edit_path(model_name: 'rails_admin_settings~setting'.freeze, id: s.id), target: :_blank
+  span.navigate-block.right-offset= link_to "удалить".freeze, delete_path(model_name: 'rails_admin_settings~setting'.freeze, id: s.id), target: :_blank
+  span= link_to "редактировать здесь".freeze, '#', class: 'inline-edit'.freeze
+
+  span.rails_admin_model_settings_inline_form.hidden
+    = render partial: "rails_admin/main/setting_value_form".freeze, locals: {object: s}
+
+  .setting_value.filterable
+    - if s.file_kind?
+      = link_to CGI::escapeHTML(s.to_path), CGI::escapeHTML(s.file.url)
+    - elsif s.image_kind?
+      = link_to CGI::escapeHTML(s.file.url) do
+        = image_tag CGI::escapeHTML(s.file.url)
+    / - elsif s.enum_kind?
+    /   - option = s.enum_collection.select { |e| e.last.to_s == s.value }.first
+    /   = option ? option.first : s.value
+    - else
+      == s.value

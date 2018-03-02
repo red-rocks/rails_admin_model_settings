@@ -1,39 +1,21 @@
-#rails_admin_model_settings_wrapper
-  - unless request.xhr?
-    = stylesheet_link_tag 'rails_admin/rails_admin_model_settings'
-    = javascript_include_tag 'rails_admin/rails_admin_model_settings'
-  span.filter-settings= search_field_tag "filter".freeze
-  span.navigate-block.update-settings= link_to "обновить".freeze, model_settings_path(model_name: @abstract_model.param_key), data: {remote: true}
-  span.auto-update-block.right-offset
-    label
-      = "Автообновление"
-      = check_box_tag "auto_update", nil, checed: true
-  .clearfix
+- unless @setting.blank?
+  = render partial: "rails_admin/main/model_settings/setting_block", locals: {s: @setting.first}
+
+- else
+  #rails_admin_model_settings_wrapper
+    - unless request.xhr?
+      = stylesheet_link_tag 'rails_admin/rails_admin_model_settings'
+      = javascript_include_tag 'rails_admin/rails_admin_model_settings'
+    span.filter-settings= search_field_tag "filter".freeze
+    span.navigate-block.update-settings= link_to "обновить".freeze, model_settings_path(model_name: @abstract_model.param_key), data: {remote: true}
+    span.auto-update-block.right-offset
+      label
+        = "Автообновление"
+        = check_box_tag "auto_update", nil, checked: false
+    .clearfix
 
 
-  #rails_admin_model_settings
-    .controls
-      - @settings.each do |s|
-        .setting_block
-          span.filterable= s.label
-          span.filterable= s.key
-          span.filterable= s.type
-          span.navigate-block.right-offset= link_to "открыть".freeze, show_path(model_name: 'rails_admin_settings~setting'.freeze, id: s.id), target: :_blank
-          span.navigate-block.right-offset= link_to "редактировать".freeze, edit_path(model_name: 'rails_admin_settings~setting'.freeze, id: s.id), target: :_blank
-          span.navigate-block.right-offset= link_to "удалить".freeze, delete_path(model_name: 'rails_admin_settings~setting'.freeze, id: s.id), target: :_blank
-          span= link_to "редактировать здесь".freeze, '#', class: 'inline-edit'.freeze
-
-          span.rails_admin_model_settings_inline_form.hidden
-            = render partial: "rails_admin/main/setting_value_form".freeze, locals: {object: s}
-
-          .setting_value.filterable
-            - if s.file_kind?
-              = link_to CGI::escapeHTML(s.to_path), CGI::escapeHTML(s.file.url)
-            - elsif s.image_kind?
-              = link_to CGI::escapeHTML(s.file.url) do
-                = image_tag CGI::escapeHTML(s.file.url)
-            / - elsif s.enum_kind?
-            /   - option = s.enum_collection.select { |e| e.last.to_s == s.value }.first
-            /   = option ? option.first : s.value
-            - else
-              == s.value
+    #rails_admin_model_settings
+      .controls
+        - @settings.each do |s|
+          = render partial: "rails_admin/main/model_settings/setting_block", locals: {s: s}
