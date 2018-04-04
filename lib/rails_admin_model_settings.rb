@@ -11,12 +11,11 @@ require 'rails_admin_model_settings/action'
 module RailsAdminModelSettings
   class << self
     def orm
-      :mongoid
-      # if defined?(::Mongoid)
-      #   :mongoid
-      # else
-      #   :active_record
-      # end
+      if defined?(::Mongoid)
+        :mongoid
+      else
+        :active_record
+      end
     end
 
     def mongoid?
