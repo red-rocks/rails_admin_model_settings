@@ -2,7 +2,7 @@
   span.filterable= s.label
   span.filterable= s.key
   span.filterable= s.type
-  span.update-setting.right-offset.= link_to "обновить".freeze, model_settings_path(model_name: @abstract_model.param_key, setting_id: s.id), remote: true
+  span.update-setting.right-offset.= link_to "обновить".freeze, model_settings_path(model_name: @abstract_model.to_param, setting_id: s.id), remote: true
   span.navigate-block.right-offset= link_to "открыть".freeze, show_path(model_name: 'rails_admin_settings~setting'.freeze, id: s.id), target: :_blank
   span.navigate-block.right-offset= link_to "редактировать".freeze, edit_path(model_name: 'rails_admin_settings~setting'.freeze, id: s.id), target: :_blank
   span.navigate-block.right-offset= link_to "удалить".freeze, delete_path(model_name: 'rails_admin_settings~setting'.freeze, id: s.id), target: :_blank

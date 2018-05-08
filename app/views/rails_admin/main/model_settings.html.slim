@@ -6,7 +6,7 @@
     = stylesheet_link_tag 'rails_admin/rails_admin_model_settings'
     = javascript_include_tag 'rails_admin/rails_admin_model_settings'
     span.filter-settings= search_field_tag "filter".freeze
-    span.navigate-block.update-settings= link_to "обновить".freeze, model_settings_path(model_name: @abstract_model.param_key), data: {remote: true}
+    span.navigate-block.update-settings= link_to "обновить".freeze, model_settings_path(model_name: @abstract_model.to_param), data: {remote: true}
     span.auto-update-block.right-offset
       label
         = "Автообновление"
