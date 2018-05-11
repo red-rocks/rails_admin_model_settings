@@ -16,12 +16,20 @@ $(document).on "click", "#rails_admin_model_settings .inline-edit", (e)->
   e.preventDefault()
   link = $(e.currentTarget)
   span = link.parent()
-  span.siblings('.rails_admin_model_settings_inline_form.hidden').removeClass('hidden').find('form').data("remote", "true")
+  span.siblings('.rails_admin_model_settings_inline_form.hidden').removeClass('hidden need-hidden').find('form').data("remote", "true")
   # span.siblings('.navigate-block').find('a').attr("target", "_blank")
-  span.siblings(".setting_value").andSelf().addClass('hidden')
+  span.siblings(".setting_value").andSelf().addClass('hidden need-hidden')
   $("#edit_rails_admin_settings_setting .raw_array_field").find(":input[type='hidden']").trigger('change')
   return false
 
+
+$(document).on "click", "#rails_admin_model_settings_wrapper .toggle-block a", (e)->
+  toggle_block = $(e.currentTarget).closest('.toggle-block')
+  toggle_block.toggleClass('opened')
+  rails_admin_model_settings_inline_form = toggle_block.siblings('.rails_admin_model_settings_inline_form')
+  setting_value = toggle_block.siblings('.setting_value')
+  rails_admin_model_settings_inline_form.toggleClass("hidden") unless rails_admin_model_settings_inline_form.is('.need-hidden')
+  setting_value.toggleClass("hidden") unless setting_value.is('.need-hidden')
 
 
 $(document).on "ajax:send", "#rails_admin_model_settings_wrapper .update-settings a", (e, data, status, xhr)->
@@ -29,6 +37,7 @@ $(document).on "ajax:send", "#rails_admin_model_settings_wrapper .update-setting
 
 $(document).on "ajax:success", "#rails_admin_model_settings_wrapper .update-settings a", (e, data, status, xhr)->
   $("#rails_admin_model_settings").replaceWith($(data).find("#rails_admin_model_settings"))
+  $(document).trigger('rails_admin.dom_ready')
 
 
 $(document).on "ajax:send", "#rails_admin_model_settings_wrapper .setting_block .update-setting a", (e, data, status, xhr)->
@@ -39,6 +48,7 @@ $(document).on "ajax:success", "#rails_admin_model_settings_wrapper .setting_blo
   setTimeout(->
     $("#rails_admin_model_settings_wrapper .setting_block.new-setting").removeClass("new-setting")
   , 2000)
+  $(document).trigger('rails_admin.dom_ready')
 
 
 $(document).on "submit", ".rails_admin_settings_inline_form form", (e)->
@@ -72,3 +82,10 @@ $(document).on "change blur keypress keyup keydown", "#rails_admin_model_setting
         me.removeClass("filtered")
         return false
     return true
+
+
+
+$(document).on "ajax:complete", ".rails_admin_model_settings_inline_form form", (e, data, status, xhr)->
+  if $("#rails_admin_model_settings_wrapper #auto_update:checked").length > 0
+    form = $(e.currentTarget)
+    form.closest('.rails_admin_model_settings_inline_form').siblings('.update-setting').find('a').click()

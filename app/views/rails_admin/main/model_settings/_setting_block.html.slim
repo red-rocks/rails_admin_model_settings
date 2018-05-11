@@ -2,14 +2,27 @@
   span.filterable= s.label
   span.filterable= s.key
   span.filterable= s.type
-  span.update-setting.right-offset.= link_to "обновить".freeze, model_settings_path(model_name: @abstract_model.to_param, setting_id: s.id), remote: true
+  span.toggle-block.opened.right-offset= link_to "свернуть/развернуть".freeze, '#'
+  span.update-setting.right-offset= link_to "обновить".freeze, model_settings_path(model_name: @abstract_model.to_param, setting_id: s.id), remote: true
   span.navigate-block.right-offset= link_to "открыть".freeze, show_path(model_name: 'rails_admin_settings~setting'.freeze, id: s.id), target: :_blank
   span.navigate-block.right-offset= link_to "редактировать".freeze, edit_path(model_name: 'rails_admin_settings~setting'.freeze, id: s.id), target: :_blank
   span.navigate-block.right-offset= link_to "удалить".freeze, delete_path(model_name: 'rails_admin_settings~setting'.freeze, id: s.id), target: :_blank
   span= link_to "редактировать здесь".freeze, '#', class: 'inline-edit'.freeze
 
-  span.rails_admin_model_settings_inline_form.hidden
-    = render partial: "rails_admin/main/setting_value_form".freeze, locals: {object: s}
+  span.rails_admin_model_settings_inline_form.hidden.need-hidden
+    ruby:
+      _object = s
+      _abstract_model = RailsAdmin::AbstractModel.new(s.class)
+      _object_name = s.class.name
+      locals = {
+        object: _object,
+        _object: _object,
+        _abstract_model: _abstract_model,
+        _object_name: _object_name
+      }
+    = render partial: "rails_admin/main/setting_value_form".freeze, locals: locals
+    / = rails_admin_form_for _object, url: edit_path(_abstract_model, _object.id), as: _abstract_model.param_key, html: { method: "put", multipart: true, class: "form-horizontal denser", id: "edit_landing_setting_#{s.id}"} do |form|
+    /   = form.generate action: :update, model_config: _abstract_model.config
 
   .setting_value.filterable
     - if s.file_kind?

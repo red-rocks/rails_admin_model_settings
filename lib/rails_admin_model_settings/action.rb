@@ -37,7 +37,9 @@ module RailsAdmin
           Proc.new do |klass|
             @config = ::RailsAdminModelSettings::Configuration.new @abstract_model
             if request.get?
-              if @abstract_model
+              if @object and @object.respond_to?(:settings)
+                @settings = @object.settings
+              elsif @abstract_model
                 @model = @abstract_model.model
                 @settings = @model.respond_to?(:rails_admin_model_settings) ? @model.rails_admin_model_settings.all : RailsAdminSettings::Setting.none
               else
